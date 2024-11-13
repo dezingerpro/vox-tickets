@@ -16,7 +16,16 @@ let sessionCookies = null; // Store session cookies globally
 
 // Function to log in and save session cookies
 async function initLogin() {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu'
+    ]
+  });
+  
   const page = await browser.newPage();
 
   try {
