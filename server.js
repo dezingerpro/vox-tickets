@@ -17,13 +17,15 @@ let sessionCookies = null; // Store session cookies globally
 // Function to log in and save session cookies
 async function initLogin() {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: true, // Run in headless mode
+    executablePath: '/opt/render/.cache/puppeteer/chrome/linux-131.0.6778.85/chrome-linux64/chrome', // Path to Chrome
     args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-gpu'
-    ]
+      '--no-sandbox', // Disable sandboxing for environments like Render
+      '--disable-setuid-sandbox', // Prevent setuid sandboxing
+      '--disable-gpu', // Disable GPU to reduce resource usage
+      '--disable-dev-shm-usage', // Avoid /dev/shm issues on limited environments
+      '--disable-software-rasterizer', // Reduce additional rendering overhead
+    ],
   });
   
   const page = await browser.newPage();
